@@ -420,29 +420,4 @@ requirements.txt               # Dependencies
 
 ---
 
-## 📄 License
-
-MIT License - see LICENSE file for details
-
----
-
-## 🙏 Acknowledgments
-
-- **spaCy**: Fast NLP pipeline
-- **Mistral AI**: Semantic understanding
-- **Gradio**: Web interface framework
-- **Plotly**: Interactive visualizations
-
----
-
-## 📧 Contact
-
-For questions, issues, or suggestions:
-
-- GitHub Issues: [Repository Issues]
-- Email: [Contact Email]
-- Documentation: [Docs Link]
-
----
-
 **Built with ❤️ for writers and content creators**
