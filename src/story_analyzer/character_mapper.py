@@ -9,7 +9,7 @@ Maps character relationships using network analysis:
 """
 
 import re
-from typing import Dict, List, Set, Tuple, Optional
+from typing import Dict, List, Set, Tuple, Optional, Any
 from collections import defaultdict, Counter
 import networkx as nx
 
@@ -36,7 +36,7 @@ class CharacterMapper:
         """Initialize the character mapper."""
         pass
 
-    def map_characters(self, text: str, min_mentions: int = 2) -> Dict[str, any]:
+    def map_characters(self, text: str, min_mentions: int = 2) -> Dict[str, Any]:
         """
         Map characters and their relationships in the story.
 
@@ -70,7 +70,7 @@ class CharacterMapper:
             'clusters': self._identify_clusters(graph),
         }
 
-    def _empty_result(self) -> Dict[str, any]:
+    def _empty_result(self) -> Dict[str, Any]:
         """Return empty result for invalid input."""
         return {
             'characters': [],
@@ -139,7 +139,7 @@ class CharacterMapper:
         
         return graph
 
-    def _extract_relationships(self, graph: nx.Graph) -> List[Dict[str, any]]:
+    def _extract_relationships(self, graph: nx.Graph) -> List[Dict[str, Any]]:
         """Extract relationship information from the graph."""
         relationships = []
         
@@ -239,7 +239,7 @@ class CharacterMapper:
         except:
             return []
 
-    def get_network_data(self, text: str, min_mentions: int = 2) -> Dict[str, any]:
+    def get_network_data(self, text: str, min_mentions: int = 2) -> Dict[str, Any]:
         """
         Get network data in a format suitable for visualization.
 

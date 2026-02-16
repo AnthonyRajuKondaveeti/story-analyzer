@@ -9,12 +9,17 @@ Classifies story genres using rule-based heuristics and pattern matching:
 """
 
 import re
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Set, Tuple, Any
 from collections import Counter
 
 
 class GenreClassifier:
     """Classifies story genres using deterministic heuristics."""
+
+    # Thresholds for tone detection
+    MIN_HUMOROUS_INDICATORS = 2
+    MIN_SERIOUS_INDICATORS = 2
+    LONG_SENTENCE_THRESHOLD = 20
 
     # Genre-specific keyword sets
     GENRE_KEYWORDS = {
@@ -64,7 +69,7 @@ class GenreClassifier:
         """Initialize the genre classifier."""
         pass
 
-    def classify(self, text: str, top_n: int = 3) -> Dict[str, any]:
+    def classify(self, text: str, top_n: int = 3) -> Dict[str, Any]:
         """
         Classify the story into one or more genres.
 
@@ -107,7 +112,7 @@ class GenreClassifier:
             'tone': self._analyze_tone(words, sentences),
         }
 
-    def _empty_result(self) -> Dict[str, any]:
+    def _empty_result(self) -> Dict[str, Any]:
         """Return empty result for invalid input."""
         return {
             'primary_genre': 'general',
@@ -221,9 +226,9 @@ class GenreClassifier:
             return 'dark'
         elif light_count > dark_count * 1.5:
             return 'light'
-        elif humorous_count >= 2:
+        elif humorous_count >= self.MIN_HUMOROUS_INDICATORS:
             return 'humorous'
-        elif serious_count >= 2 or avg_sentence_length > 20:
+        elif serious_count >= self.MIN_SERIOUS_INDICATORS or avg_sentence_length > self.LONG_SENTENCE_THRESHOLD:
             return 'serious'
         else:
             return 'neutral'

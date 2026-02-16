@@ -9,7 +9,7 @@ Predicts story endings using pattern recognition and narrative arc analysis:
 """
 
 import re
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from enum import Enum
 
 
@@ -25,6 +25,10 @@ class EndingType(Enum):
 
 class EndingPredictor:
     """Predicts story endings based on narrative patterns."""
+
+    # Thresholds for ending detection
+    MIN_TWIST_INDICATORS = 2
+    MIN_AMBIGUOUS_INDICATORS = 2
 
     # Words associated with positive endings
     POSITIVE_WORDS = {
@@ -54,7 +58,7 @@ class EndingPredictor:
         """Initialize the ending predictor."""
         pass
 
-    def predict(self, text: str) -> Dict[str, any]:
+    def predict(self, text: str) -> Dict[str, Any]:
         """
         Predict the story ending based on narrative patterns.
 
@@ -87,7 +91,7 @@ class EndingPredictor:
             'emotional_trajectory': self._analyze_emotional_trajectory(sentences),
         }
 
-    def _empty_result(self) -> Dict[str, any]:
+    def _empty_result(self) -> Dict[str, Any]:
         """Return empty result for invalid input."""
         return {
             'predicted_ending': EndingType.AMBIGUOUS.value,
@@ -161,10 +165,10 @@ class EndingPredictor:
         ambiguous_count = sum(1 for word in ending_words if word in self.AMBIGUOUS_WORDS)
         
         # Decision logic
-        if twist_count >= 2:
+        if twist_count >= self.MIN_TWIST_INDICATORS:
             return EndingType.TWIST
         
-        if ambiguous_count >= 2:
+        if ambiguous_count >= self.MIN_AMBIGUOUS_INDICATORS:
             return EndingType.AMBIGUOUS
         
         if positive_count > negative_count * 1.5:

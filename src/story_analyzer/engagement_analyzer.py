@@ -10,7 +10,7 @@ Analyzes story engagement using deterministic heuristics such as:
 """
 
 import re
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from collections import Counter
 
 
@@ -33,7 +33,7 @@ class EngagementAnalyzer:
         """Initialize the engagement analyzer."""
         pass
 
-    def analyze(self, text: str) -> Dict[str, any]:
+    def analyze(self, text: str) -> Dict[str, Any]:
         """
         Analyze story engagement using multiple heuristics.
 
@@ -59,7 +59,7 @@ class EngagementAnalyzer:
             'readability': self._calculate_readability(sentences, words),
         }
 
-    def _empty_result(self) -> Dict[str, any]:
+    def _empty_result(self) -> Dict[str, Any]:
         """Return empty result for invalid input."""
         return {
             'engagement_score': 0.0,

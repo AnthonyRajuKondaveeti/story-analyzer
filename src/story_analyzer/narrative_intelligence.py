@@ -5,7 +5,7 @@ Main orchestrator for the Narrative Intelligence System (NIS).
 Combines all analysis components with optional LLM enhancement.
 """
 
-from typing import Dict, Optional
+from typing import Dict, Optional, List, Any
 from .engagement_analyzer import EngagementAnalyzer
 from .ending_predictor import EndingPredictor
 from .genre_classifier import GenreClassifier
@@ -48,7 +48,7 @@ class NarrativeIntelligence:
         # For now, it's a placeholder for future LLM integration
         pass
 
-    def analyze(self, text: str, components: Optional[list] = None) -> Dict[str, any]:
+    def analyze(self, text: str, components: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Perform comprehensive narrative analysis.
 
@@ -91,7 +91,7 @@ class NarrativeIntelligence:
 
         return results
 
-    def _empty_result(self) -> Dict[str, any]:
+    def _empty_result(self) -> Dict[str, Any]:
         """Return empty result for invalid input."""
         return {
             'text_length': 0,
@@ -100,7 +100,7 @@ class NarrativeIntelligence:
             'error': 'Empty or invalid text provided',
         }
 
-    def _generate_summary(self, results: Dict[str, any]) -> Dict[str, any]:
+    def _generate_summary(self, results: Dict[str, Any]) -> Dict[str, Any]:
         """Generate overall summary of the analysis."""
         summary = {}
 
@@ -142,22 +142,22 @@ class NarrativeIntelligence:
         else:
             return 'very_low'
 
-    def analyze_engagement(self, text: str) -> Dict[str, any]:
+    def analyze_engagement(self, text: str) -> Dict[str, Any]:
         """Analyze only story engagement."""
         return self.engagement_analyzer.analyze(text)
 
-    def predict_ending(self, text: str) -> Dict[str, any]:
+    def predict_ending(self, text: str) -> Dict[str, Any]:
         """Predict only story ending."""
         return self.ending_predictor.predict(text)
 
-    def classify_genre(self, text: str) -> Dict[str, any]:
+    def classify_genre(self, text: str) -> Dict[str, Any]:
         """Classify only story genre."""
         return self.genre_classifier.classify(text)
 
-    def map_characters(self, text: str) -> Dict[str, any]:
+    def map_characters(self, text: str) -> Dict[str, Any]:
         """Map only character relationships."""
         return self.character_mapper.map_characters(text)
 
-    def get_character_network(self, text: str, min_mentions: int = 2) -> Dict[str, any]:
+    def get_character_network(self, text: str, min_mentions: int = 2) -> Dict[str, Any]:
         """Get character network visualization data."""
         return self.character_mapper.get_network_data(text, min_mentions)
