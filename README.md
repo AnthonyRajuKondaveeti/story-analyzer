@@ -140,36 +140,47 @@ Relationships:
 ### High-Level Design
 
 ```
-┌─────────────────────────────────────┐
-│      Gradio Web Interface           │
-│  Story | Taxonomy | Characters      │
-└──────────┬──────────────────────────┘
-           │
-           ▼
-┌──────────────────────┐    ┌─────────────────┐
-│   Story Analyzer     │    │ Taxonomy Engine │
-│   • Engagement       │    │ • Rule-based    │
-│   • Ending           │    │ • LLM (optional)│
-│   • Recommendations  │    └─────────────────┘
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────────────────────┐
-│    Dual-Path Analysis Engine         │
-├──────────────┬───────────────────────┤
-│  Heuristic   │    Semantic (LLM)     │
-│  • Free      │    • $0.002/call      │
-│  • Fast      │    • Cached           │
-│  • Always on │    • Optional         │
-└──────────────┴───────────────────────┘
-           │
-           ▼
-┌──────────────────────┐
-│  Decision Engine     │
-│  • Ensemble (35/65)  │
-│  • Consistency rules │
-│  • Fallback chains   │
-└──────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│              GRADIO WEB INTERFACE                    │
+│   Story Analysis | Taxonomy | Character Mapping      │
+└────────────┬──────────────────────────┬──────────────┘
+             │                          │
+             ▼                          ▼
+┌────────────────────────┐   ┌─────────────────────────┐
+│  STORY ANALYZER        │   │  TAXONOMY ENGINE        │
+│  - Engagement          │   │  - Rule-based (free)    │
+│  - Ending Detection    │   │  - LLM-based (optional) │
+│  - Recommendations     │   └─────────────────────────┘
+└────────┬───────────────┘              │
+         │                              │
+         ▼                              ▼
+┌────────────────────────────────────────────────────┐
+│           DUAL-PATH ANALYSIS ENGINE                │
+├─────────────────────┬──────────────────────────────┤
+│  HEURISTIC PATH     │    SEMANTIC PATH (LLM)       │
+│  • TextAnalyzer     │    • LLMAnalyzer             │
+│  • Always runs      │    • Optional                │
+│  • Free, fast       │    • Mistral API             │
+│  • Deterministic    │    • Cached (24hr TTL)       │
+└─────────────────────┴──────────────────────────────┘
+             │                          │
+             └──────────┬───────────────┘
+                        ▼
+         ┌──────────────────────────┐
+         │   DECISION ENGINE        │
+         │   • Ensemble fusion      │
+         │   • 35/65 weighting      │
+         │   • Consistency rules    │
+         └──────────┬───────────────┘
+                    ▼
+         ┌──────────────────────────┐
+         │   GUARDRAILS             │
+         │   • Rate limiting        │
+         │   • Caching (LRU)        │
+         │   • Input validation     │
+         │   • Error recovery       │
+         └──────────────────────────┘
+
 ```
 
 ### Key Components
